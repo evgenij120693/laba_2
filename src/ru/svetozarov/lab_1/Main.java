@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by Шмыга on 07.02.2017.
+/**Класс Main точка входа в программу
+ * @author Evgenij Svetozarov
  */
 public class Main {
     public static void main(String[] args) {
@@ -18,11 +18,21 @@ public class Main {
              args) {
             ReaderFile readerFile= new ReaderFile(arg, wordBook);
             readersArray.add(readerFile);
-
+            readerFile.start();
         }
         for (ReaderFile readerFile:
                 readersArray){
-            readerFile.start();
+            try {
+                readerFile.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        wordBook.writeFile();
+        if(!wordBook.flagError) {
+            System.out.println("Process complite.");
+        }else{
+            System.out.println("Process failed.");
         }
 
 

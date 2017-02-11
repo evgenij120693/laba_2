@@ -23,10 +23,15 @@ public class ReaderFile extends Thread {
         return nameFile;
     }
 
+    /**
+     * Функция проверят является ли nameFile
+     * удаленным ресурсом или локальным файлом, далее в соответсвии
+     * с этим устанавливает значение поля this.name
+     * @param nameFile имя ресурса (файла)
+     */
     public void setNameFile(String nameFile) {
         Pattern p = Pattern.compile(REG_HTML);
         Matcher m = p.matcher(nameFile);
-        System.out.println(nameFile.matches(REG_HTML));
         if(m.matches()){
             this.nameFile = nameFile;
         }
@@ -46,27 +51,28 @@ public class ReaderFile extends Thread {
             String str;
             while ((str = reader.readLine()) != null) {
                 Parser.parseString(str, wordBook);
-               // System.out.println("rest");
             }
         }
     }
 
     @Override
+    /**
+     * Функция запускает процесс чтение файла
+     */
     public void run(){
         try {
             readFile();
         }catch (FileNotFoundException e) {
-            wordBook.failedProcess("Error: file not found");
+            wordBook.failedProcess("Error: file not found "+getNameFile());
             e.printStackTrace();
         } catch (IOException e) {
             //e.printStackTrace();
-            wordBook.failedProcess("Error: file not found");
+            wordBook.failedProcess("Error open file "+getNameFile());
         }catch (InvalidCharException e){
-            wordBook.failedProcess("Error: invalid char in string\n"+e.getMessage());
+            wordBook.failedProcess("Error: invalid char in string "+e.getMessage()+", in file "+getNameFile());
 
         }catch (DublicateWordException e){
             wordBook.failedProcess("Error, dublicate word: "+e.getMessage());
         }
-        wordBook.writeFile();
     }
 }

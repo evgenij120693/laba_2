@@ -8,27 +8,35 @@ import java.io.IOException;
 import java.util.HashSet;
 
 /**
- * Created by Шмыга on 09.02.2017.
+ *@author Evgenij Svetozarov
+ * Класс для работы со словарем
  */
 public class WordBook {
     private volatile HashSet<String> wordBook=new HashSet<>();
     public volatile boolean flagError=false;
     public volatile boolean isShowError=false;
+    /**
+     * Функция добавляет слово в словарь wordBook
+     * @param str слово, добовляемое в словарь
+     * @return результат операции добавления слова в словарь,
+     * true -  в случае успеха, false - в случае если такое слово уже есть (произойдет перезапись)
+     */
     public boolean addWord(String str){
         synchronized (wordBook) {
-            System.out.println("Flag error: "+flagError+" thread "+Thread.currentThread().getId());
             boolean result=false;
             if (!flagError) {
                 result=wordBook.add(str);
+                System.out.println("thread "+Thread.currentThread().getId()+" word is: "+str+" hachCode: "+str.hashCode());
                 if(!result){
                     flagError=true;
                 }
             }
-            //wordBook.notifyAll();
             return result;
         }
     }
+
     public HashSet<String> getWordbook() {
+
         return wordBook;
     }
 
@@ -36,6 +44,9 @@ public class WordBook {
         this.wordBook = wordBook;
     }
 
+    /**
+     * функция записывает слова, хранящиеся в словаре wordBook в файл
+     */
     public void writeFile(){
         String fileName="C:\\res.txt";
         try(FileWriter file=new FileWriter(fileName)){
@@ -46,20 +57,22 @@ public class WordBook {
             }
 
         } catch (IOException e) {
+            System.out.println("Ошибка записи в файл");
             e.printStackTrace();
         }
     }
 
+    /**
+     * Функция останавливает работу со словарем wordBook, выводи сообщение об ошибке,
+     * @param strError сообщение об ошибке, ее описание
+     */
     public void failedProcess(String strError) {
         synchronized (wordBook){
+            flagError=true;
             if(!isShowError){
                 System.out.println(strError);
-                writeFile();
             }
             isShowError=true;
-
-           // wordBook.notify();
-
         }
     }
 }

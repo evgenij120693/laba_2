@@ -1,7 +1,9 @@
 package ru.svetozarov.lab_1.exceptions;
 
 /**
- * Created by Шмыга on 09.02.2017.
+ * Класс исключения, возникающего при обнаружении @{@link ru.svetozarov.lab_1.handler_file.Parser}
+ * запрещенного символа
+ * @author Evgenij Svetozarov
  */
 public class InvalidCharException extends Exception {
     public InvalidCharException(){
