@@ -28,7 +28,6 @@ public class Main {
                 e.printStackTrace();
             }
         }
-        wordBook.writeFile();
         if(!wordBook.flagError) {
             System.out.println("Process complite.");
         }else{

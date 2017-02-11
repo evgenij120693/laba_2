@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.HashSet;
 
 /**
- *@author Evgenij Svetozarov
+ *@author Evgenij Svetozarov by 11.02.2017
  * Класс для работы со словарем
  */
 public class WordBook {
