@@ -36,7 +36,7 @@ public class Main {
         }
         wordBook.writeFile();
         if(!wordBook.flagError) {
-            System.out.println("Process succesfull complete.");
+            System.out.println("Process succesfully completed.");
         }else{
             System.out.println("Process failed.");
         }
