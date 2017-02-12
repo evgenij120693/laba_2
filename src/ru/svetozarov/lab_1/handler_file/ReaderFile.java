@@ -1,6 +1,5 @@
 package ru.svetozarov.lab_1.handler_file;
 
-//import ru.svetozarov.lab_1.exceptions.ErrorTest;
 
 import ru.svetozarov.lab_1.WordBook;
 import ru.svetozarov.lab_1.exceptions.DublicateWordException;
@@ -53,7 +52,7 @@ public class ReaderFile extends Thread {
     }
 
     private void readFile() throws FileNotFoundException, IOException,InvalidCharException, DublicateWordException{
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader((new URL(nameFile)).openStream()));) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader((new URL(nameFile)).openStream()))) {
             String str;
             while ((str = reader.readLine()) != null) {
                 Parser.parseString(str, wordBook);
@@ -61,10 +60,10 @@ public class ReaderFile extends Thread {
         }
     }
 
-    @Override
     /**
      * Функция запуска процесса чтения ресурса
      */
+    @Override
     public void run(){
         try {
             readFile();

@@ -1,10 +1,8 @@
 package ru.svetozarov.lab_1;
 import ru.svetozarov.lab_1.handler_file.ReaderFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 /**
  * Класс Main точка входа в программу
