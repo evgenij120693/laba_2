@@ -12,7 +12,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by Evgenij Svetozarov on 07.02.2017.
+ * Класс предназначен для работы с ресурсом в отдельном потоке
+ * @author Evgenij Svetozarov
  */
 public class ReaderFile extends Thread {
     private String nameFile;
@@ -41,6 +42,11 @@ public class ReaderFile extends Thread {
 
     }
 
+    /**
+     * Функция-конструктор
+     * @param name имя ресурса
+     * @param wordBook ссылка на словарь
+     */
     public ReaderFile(String name, WordBook wordBook){
             this.wordBook = wordBook;
             setNameFile(name);
@@ -57,7 +63,7 @@ public class ReaderFile extends Thread {
 
     @Override
     /**
-     * Функция запускает процесс чтение файла
+     * Функция запуска процесса чтения ресурса
      */
     public void run(){
         try {
@@ -72,7 +78,7 @@ public class ReaderFile extends Thread {
             wordBook.failedProcess("Error: invalid char in string "+e.getMessage()+", in file "+getNameFile());
 
         }catch (DublicateWordException e){
-            wordBook.failedProcess("Error, dublicate word: "+e.getMessage());
+            wordBook.failedProcess("Error, dublicate word: "+e.getMessage()+",in file "+getNameFile());
         }
     }
 }

@@ -6,9 +6,6 @@ package ru.svetozarov.lab_1.exceptions;
  * @author Evgenij Svetozarov
  */
 public class InvalidCharException extends Exception {
-    public InvalidCharException(){
-        super();
-    }
 
     public InvalidCharException(String message) {
         super(message);

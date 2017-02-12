@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.util.HashSet;
 
 /**
- *@author Evgenij Svetozarov by 11.02.2017
- * Класс для работы со словарем
+ * Класс осуществляет работу со словарем
+ * @author Evgenij Svetozarov
  */
 public class WordBook {
     private volatile HashSet<String> wordBook=new HashSet<>();
@@ -26,7 +26,6 @@ public class WordBook {
             boolean result=false;
             if (!flagError) {
                 result=wordBook.add(str);
-                System.out.println("thread "+Thread.currentThread().getId()+" word is: "+str+" hachCode: "+str.hashCode());
                 if(!result){
                     flagError=true;
                 }
@@ -45,10 +44,10 @@ public class WordBook {
     }
 
     /**
-     * функция записывает слова, хранящиеся в словаре wordBook в файл
+     * функция записи слов, хранящихся в словаре wordBook, в файл
      */
     public void writeFile(){
-        String fileName="C:\\res.txt";
+        String fileName="result.txt";
         try(FileWriter file=new FileWriter(fileName)){
             for (String str:
                     wordBook){
