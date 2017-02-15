@@ -17,7 +17,8 @@ import java.util.regex.Pattern;
 public class ReaderFile extends Thread {
     private String nameFile;
     private WordBook wordBook;
-    private final static String REG_HTML="^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?$";
+    public boolean localResours=false;
+    private final static String REG_HTML = "^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?$";
 
     public String getNameFile() {
         return nameFile;
@@ -36,7 +37,7 @@ public class ReaderFile extends Thread {
             this.nameFile = nameFile;
         }
         else{
-            this.nameFile="file:/"+nameFile;
+            this.nameFile = "file:/"+nameFile;
         }
 
     }
@@ -51,7 +52,14 @@ public class ReaderFile extends Thread {
             setNameFile(name);
     }
 
-    private void readFile() throws FileNotFoundException, IOException,InvalidCharException, DublicateWordException{
+    /**
+     * Функция открытие и чтения ресурса nameFile
+     * @throws FileNotFoundException - файл не найден
+     * @throws IOException - ошибка открытия ресурса
+     * @throws InvalidCharException - обнаружен неразрешенный символ
+     * @throws DublicateWordException - найдено слово дубликат
+     */
+    public void readFile() throws FileNotFoundException, IOException,InvalidCharException, DublicateWordException{
         try (BufferedReader reader = new BufferedReader(new InputStreamReader((new URL(nameFile)).openStream()))) {
             String str;
             while ((str = reader.readLine()) != null) {
@@ -60,22 +68,17 @@ public class ReaderFile extends Thread {
         }
     }
 
-    /**
-     * Функция запуска процесса чтения ресурса
-     */
+
     @Override
     public void run(){
         try {
             readFile();
         }catch (FileNotFoundException e) {
             wordBook.failedProcess("Error: file not found "+getNameFile());
-            e.printStackTrace();
         } catch (IOException e) {
-            //e.printStackTrace();
             wordBook.failedProcess("Error open file "+getNameFile());
         }catch (InvalidCharException e){
             wordBook.failedProcess("Error: invalid char in string "+e.getMessage()+", in file "+getNameFile());
-
         }catch (DublicateWordException e){
             wordBook.failedProcess("Error, dublicate word: "+e.getMessage()+",in file "+getNameFile());
         }

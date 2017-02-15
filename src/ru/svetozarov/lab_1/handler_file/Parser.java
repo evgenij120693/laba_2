@@ -39,19 +39,18 @@ public class Parser {
      * @throws DublicateWordException исключение, вызываемое при дублиловании слова
      */
     public static void parseString(String str, WordBook wordBook) throws InvalidCharException, DublicateWordException{
-        if(!checkStringInvalidSymbols(str)){
-            String[] arrayWord=str.split(REG_PUNKT_SYMBOL);
-            for (String word:arrayWord){
-                if(!word.trim().equals("")) {
+        String[] arrayWord=str.split(REG_PUNKT_SYMBOL);
+        for (String word:arrayWord){
+            if(!checkStringInvalidSymbols(word)) {
+                if (!word.trim().equals("")) {
                     if (!wordBook.addWord(word.trim())) {
                         throw new DublicateWordException(word.trim());
                     }
                 }
             }
+            else{
+                throw new InvalidCharException(str);
+            }
         }
-        else{
-            throw new InvalidCharException(str);
-        }
-
     }
 }
